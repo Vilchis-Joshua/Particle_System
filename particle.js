@@ -37,10 +37,12 @@ function init() {
     window.addEventListener( 'resize', onWindowResize, false );
 
     var particleS1 = createParticleSystem(0xffffff, 10000, "particle.png", 0, 0, 0);
-    var particleS2 = createParticleSystem(0x0000ff, 10000, "particle.png", 150, 150, 150);
+    var particleS2 = createParticleSystem(0x00ff00, 10000, "particle.png", 150, 0, 150); //green
+    var particleS3 = createParticleSystem(0xff0000, 10000, "particle.png", -150, 0, -150); //red
    //  particleS2.position.set (150, 150, 150);
     scene.add(particleS1);
     scene.add(particleS2);
+    scene.add(particleS3);
 
     render();
 }
