@@ -2,7 +2,6 @@ var camera;
 var scene;
 var renderer;
 var cubeMesh;
-
 var clock;
 var deltaTime;
 var rotationCamera = 0;
@@ -17,7 +16,8 @@ function init() {
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 100;
+    camera.position.z = 250;
+    camera.position.x = 250;
 
     var light = new THREE.DirectionalLight( 0xffffff );
     light.position.set( 1, -1, 1 ).normalize();
@@ -36,31 +36,45 @@ function init() {
 
     window.addEventListener( 'resize', onWindowResize, false );
 
-    particleSystem = createParticleSystem();
-    scene.add(particleSystem);
+    var particleS1 = createParticleSystem(0xffffff, 10000, "particle.png");
+    var particleS2 = createParticleSystem(0x0000ff, 10000, "particle.png");
+    particleS2.position.set (150, 150, 150);
+    scene.add(particleS1);
+    scene.add(particleS2);
 
     render();
 }
 
-function createParticleSystem() {
+function createParticleSystem(color, particleCount, image) {
 
     // The number of particles in a particle system is not easily changed.
-    var particleCount = 10000;
+    // var particleCount = 10000;
 
     // Particles are just individual vertices in a geometry
     // Create the geometry that will hold all of the vertices
     var particles = new THREE.Geometry();
+    var px = 0.0;
+    var py = 0.0;
+    var pz = 0.0;
 
     // Create the vertices and add them to the particles geometry
     for (var p = 0; p < particleCount; p++) {
 
-        // This will create all the vertices in a range of -200 to 200 in all directions
-        var x = Math.random() * 400 - 200;
-        var y = Math.random() * 400 - 200;
-        var z = Math.random() * 400 - 200;
+      var distance = THREE.Math.randFloatSpread(100) - 50;
+      var theta = THREE.Math.randFloatSpread(360);
+      var phi = THREE.Math.randFloatSpread(360);
 
-        // Create the vertex
-        var particle = new THREE.Vector3(x, y, z);
+      px = distance * Math.sin(theta) * Math.cos(phi);
+      py = distance * Math.sin(theta) * Math.sin(phi);
+      pz = distance * Math.cos(theta);
+      var particle = new THREE.Vector3(px, py, pz);
+        // // This will create all the vertices in a range of -200 to 200 in all directions
+        // var x = Math.random() * 400 - 200;
+        // var y = Math.random() * 400 - 200;
+        // var z = Math.random() * 400 - 200;
+        //
+        // // Create the vertex
+        // var particle = new THREE.Vector3(x, y, z);
 
         // Add the vertex to the geometry
         particles.vertices.push(particle);
@@ -68,9 +82,9 @@ function createParticleSystem() {
 
     // Create the material that will be used to render each vertex of the geometry
     var particleMaterial = new THREE.PointsMaterial(
-            {color: 0xffffff,
-             size: 2,
-             map: THREE.ImageUtils.loadTexture("particle.png"),
+            {color: color,
+             size: 3,
+             map: THREE.ImageUtils.loadTexture(image),
              blending: THREE.AdditiveBlending,
              transparent: true,
             });
@@ -105,9 +119,9 @@ function animate() {
     render();
     requestAnimationFrame( animate );
     rotationCamera += 0.01;
-    // camera.position.y = 100;
-    camera.position.x = Math.sin(rotationCamera) * 50;
-    camera.position.z = Math.cos(rotationCamera) * 50;
+    camera.position.y = 500;
+    camera.position.x = Math.sin(rotationCamera) * 100;
+    camera.position.z = Math.cos(rotationCamera) * 100;
     camera.lookAt( scene.position ); // the origin
 }
 
