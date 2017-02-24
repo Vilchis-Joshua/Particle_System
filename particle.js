@@ -5,7 +5,7 @@ var cubeMesh;
 
 var clock;
 var deltaTime;
-
+var rotationCamera = 0;
 var particleSystem;
 
 init();
@@ -17,18 +17,18 @@ function init() {
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 50;
+    camera.position.z = 100;
 
     var light = new THREE.DirectionalLight( 0xffffff );
     light.position.set( 1, -1, 1 ).normalize();
     scene.add(light);
 
-    var geometry = new THREE.CubeGeometry( 10, 10, 10);
-    var material = new THREE.MeshPhongMaterial( { color: 0x0033ff, specular: 0x555555, shininess: 30 } );
+    // var geometry = new THREE.CubeGeometry( 10, 10, 10);
+    var material = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x555555, shininess: 30 } );
 
-    cubeMesh = new THREE.Mesh(geometry, material );
-    cubeMesh.position.z = -30;
-    scene.add( cubeMesh );
+    // cubeMesh = new THREE.Mesh(geometry, material );
+    // cubeMesh.position.z = -30;
+    // scene.add( cubeMesh );
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -45,7 +45,7 @@ function init() {
 function createParticleSystem() {
 
     // The number of particles in a particle system is not easily changed.
-    var particleCount = 2000;
+    var particleCount = 10000;
 
     // Particles are just individual vertices in a geometry
     // Create the geometry that will hold all of the vertices
@@ -69,7 +69,7 @@ function createParticleSystem() {
     // Create the material that will be used to render each vertex of the geometry
     var particleMaterial = new THREE.PointsMaterial(
             {color: 0xffffff,
-             size: 4,
+             size: 2,
              map: THREE.ImageUtils.loadTexture("particle.png"),
              blending: THREE.AdditiveBlending,
              transparent: true,
@@ -96,14 +96,19 @@ function animateParticles() {
 }
 
 function animate() {
-    deltaTime = clock.getDelta();
+    // deltaTime = clock.getDelta();
 
-    cubeMesh.rotation.x += 1 * deltaTime;
-    cubeMesh.rotation.y += 2 * deltaTime;
+    // cubeMesh.rotation.x += 1 * deltaTime;
+    // cubeMesh.rotation.y += 2 * deltaTime;
 
-    animateParticles();
+    // animateParticles();
     render();
     requestAnimationFrame( animate );
+    rotationCamera += 0.01;
+    // camera.position.y = 100;
+    camera.position.x = Math.sin(rotationCamera) * 50;
+    camera.position.z = Math.cos(rotationCamera) * 50;
+    camera.lookAt( scene.position ); // the origin
 }
 
 
