@@ -36,16 +36,16 @@ function init() {
 
     window.addEventListener( 'resize', onWindowResize, false );
 
-    var particleS1 = createParticleSystem(0xffffff, 10000, "particle.png");
-    var particleS2 = createParticleSystem(0x0000ff, 10000, "particle.png");
-    particleS2.position.set (150, 150, 150);
+    var particleS1 = createParticleSystem(0xffffff, 10000, "particle.png", 0, 0, 0);
+    var particleS2 = createParticleSystem(0x0000ff, 10000, "particle.png", 150, 150, 150);
+   //  particleS2.position.set (150, 150, 150);
     scene.add(particleS1);
     scene.add(particleS2);
 
     render();
 }
 
-function createParticleSystem(color, particleCount, image) {
+function createParticleSystem(color, particleCount, image, startX, startY, startZ) {
 
     // The number of particles in a particle system is not easily changed.
     // var particleCount = 10000;
@@ -92,6 +92,7 @@ function createParticleSystem(color, particleCount, image) {
     // Create the particle system
     particleSystem = new THREE.Points(particles, particleMaterial);
 
+    particleSystem.position.set (startX, startY, startZ);
     return particleSystem;
 }
 
