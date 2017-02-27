@@ -16,8 +16,9 @@ function init() {
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 250;
     camera.position.x = 250;
+    camera.position.y = 200;
+    camera.position.z = 250;
 
     var light = new THREE.DirectionalLight( 0xffffff );
     light.position.set( 1, -1, 1 ).normalize();
@@ -36,9 +37,9 @@ function init() {
 
     window.addEventListener( 'resize', onWindowResize, false );
 
-    var particleS1 = createParticleSystem(0xffffff, 10000, "particle.png", 0, 0, 0);
-    var particleS2 = createParticleSystem(0x00ff00, 10000, "particle.png", 150, 0, 150); //green
-    var particleS3 = createParticleSystem(0xff0000, 10000, "particle.png", -150, 0, -150); //red
+    var particleS1 = createParticleSystem(0x0000ff, 1000, "disc.png", 0, 0, 0);
+    var particleS2 = createParticleSystem(0x00ff00, 100000, "disc.png", 50, 0, 50); //green
+    var particleS3 = createParticleSystem(0xff0000, 100000, "disc.png", -50, 0, -50); //red
    //  particleS2.position.set (150, 150, 150);
     scene.add(particleS1);
     scene.add(particleS2);
@@ -62,7 +63,7 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
     // Create the vertices and add them to the particles geometry
     for (var p = 0; p < particleCount; p++) {
 
-      var distance = THREE.Math.randFloatSpread(100) - 50;
+      var distance = THREE.Math.randFloatSpread(25) - 12;
       var theta = THREE.Math.randFloatSpread(360);
       var phi = THREE.Math.randFloatSpread(360);
 
@@ -85,10 +86,10 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
     // Create the material that will be used to render each vertex of the geometry
     var particleMaterial = new THREE.PointsMaterial(
             {color: color,
-             size: 3,
+             size: 1,
              map: THREE.ImageUtils.loadTexture(image),
              blending: THREE.AdditiveBlending,
-             transparent: true,
+             transparent: false,
             });
 
     // Create the particle system
@@ -118,11 +119,11 @@ function animate() {
     // cubeMesh.rotation.x += 1 * deltaTime;
     // cubeMesh.rotation.y += 2 * deltaTime;
 
-    // animateParticles();
+    //animateParticles();
     render();
     requestAnimationFrame( animate );
+
     rotationCamera += 0.01;
-    camera.position.y = 500;
     camera.position.x = Math.sin(rotationCamera) * 100;
     camera.position.z = Math.cos(rotationCamera) * 100;
     camera.lookAt( scene.position ); // the origin
