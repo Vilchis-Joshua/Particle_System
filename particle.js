@@ -7,6 +7,9 @@ var deltaTime;
 var rotationCamera = 0;
 var particleSystem;
 
+//Point lights
+var pointLight;
+
 init();
 animate();
 
@@ -37,18 +40,24 @@ function init() {
 
     window.addEventListener( 'resize', onWindowResize, false );
 
-    var particleS1 = createParticleSystem(0x0000ff, 1000, "disc.png", 0, 0, 0);
-    var particleS2 = createParticleSystem(0x00ff00, 100000, "disc.png", 50, 0, 50); //green
-    var particleS3 = createParticleSystem(0xff0000, 100000, "disc.png", -50, 0, -50); //red
+   //  var particleS1 = createParticleSystem(0x0000ff, 100000, "disc.png", 0, 0, 0, false, 2);
+   //  var particleS2 = createParticleSystem(0x00ff00, 100000, "disc.png", 50, 0, 50, false, 2); //green
+   //  var particleS3 = createParticleSystem(0xff0000, 100000, "disc.png", -50, 0, -50, false, 2); //red
+   pointLight = createLight(0xffff00);
+   scene.add( pointLight );
+    var particleS4 = createParticleSystem(0xffff00, 100000, "particle.png", -10, 0, -10, true, 1); //yellow
+
    //  particleS2.position.set (150, 150, 150);
-    scene.add(particleS1);
-    scene.add(particleS2);
-    scene.add(particleS3);
+   //  scene.add(particleS1);
+   //  scene.add(particleS2);
+   //  scene.add(particleS3);
+    scene.add(particleS4);
+    loadSkyBox();
 
     render();
 }
 
-function createParticleSystem(color, particleCount, image, startX, startY, startZ) {
+function createParticleSystem(color, particleCount, image, startX, startY, startZ, isTransparent, size) {
 
     // The number of particles in a particle system is not easily changed.
     // var particleCount = 10000;
@@ -86,10 +95,10 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
     // Create the material that will be used to render each vertex of the geometry
     var particleMaterial = new THREE.PointsMaterial(
             {color: color,
-             size: 1,
+             size: size,
              map: THREE.ImageUtils.loadTexture(image),
              blending: THREE.AdditiveBlending,
-             transparent: false,
+             transparent: isTransparent,
             });
 
     // Create the particle system
@@ -140,4 +149,69 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
     render();
+}
+
+// Create the lights function --------------------------------------------------
+function createLight( color ) {
+      var pointLight = new THREE.PointLight( color, 1, 700 );
+      var geometry = new THREE.SphereGeometry( 3, 12, 6 );
+      var material = new THREE.MeshBasicMaterial( { color: color } );
+      var sphere = new THREE.Mesh( geometry, material );
+      pointLight.add( sphere );
+
+      return pointLight;
+}
+
+
+function loadSkyBox() {
+
+     // Load the skybox images and create list of materials
+     var materials = [
+          createMaterial( 'images/skyX55+x.png' ), // right
+          createMaterial( 'images/skyX55-x.png' ), // left
+          createMaterial( 'images/skyX55+y.png' ), // top
+          createMaterial( 'images/skyX55-y.png' ), // bottom
+          createMaterial( 'images/skyX55+z.png' ), // back
+          createMaterial( 'images/skyX55-z.png' )  // front
+     ];
+
+     // Create a large cube
+     var mesh = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100, 1, 1, 1 ), new THREE.MeshFaceMaterial( materials ) );
+
+     // Set the x scale to be -1, this will turn the cube inside out
+     mesh.scale.set(-1,1,1);
+     scene.add( mesh );
+}
+
+
+23
+24
+25
+26
+function loadSkyBox() {
+
+        // Load the skybox images and create list of materials
+        var materials = [
+            createMaterial( 'galaxy-wallpaper-02.jpg' ), // right
+            createMaterial( 'galaxy-wallpaper-02.jpg' ), // left
+            createMaterial( 'galaxy-wallpaper-02.jpg' ), // top
+            createMaterial( 'galaxy-wallpaper-02.jpg' ), // bottom
+            createMaterial( 'galaxy-wallpaper-02.jpg' ), // back
+            createMaterial( 'galaxy-wallpaper-02.jpg' )  // front
+        ];
+
+        // Create a large cube
+        var mesh = new THREE.Mesh( new THREE.BoxGeometry( 800, 800, 800, 1, 1, 1 ), new THREE.MeshFaceMaterial( materials ) );
+      //   var mesh = new THREE.Mesh( new THREE.SphereGeometry( 100, 100, 800, 1, 1, 1 ), new THREE.MeshFaceMaterial( materials ) );
+
+        // Set the x scale to be -1, this will turn the cube inside out
+        mesh.scale.set(-1,1,1);
+        scene.add( mesh );
+}
+
+function createMaterial( path ) {
+    var texture = THREE.ImageUtils.loadTexture(path);
+    var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 });
+
+    return material;
 }
