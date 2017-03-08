@@ -8,6 +8,8 @@ var rotationCamera = 0;
 var particleSystem;
 var lx, ly, lx;
 var controls;
+var particleSMercury, particleSVenus, particleSEarth, particleSMars, particleSJupiter, particleSSaturn, particleSUranus, particleSNeptune;
+var pivot;
 
 //Point lights
 var pointLight;
@@ -49,15 +51,16 @@ function init() {
 
     var particleSSun = createParticleSystem(0xEA7D17, 900000, "disc.png", 0, 0, 0, true, 1, 10, 80); //sun
     var particleSSun1 = createParticleSystem(0xEEF21F, 100000, "disc.png", 0, 0, 0, true, 4, 80, 40); //sun
-    var particleSMercury = createParticleSystem(0x86989D, 10000, "disc.png", 110, 0, 0, true, 2, 1, 3); //mercury
-    var particleSVenus = createParticleSystem(0xDD9939, 30000, "disc.png", 140, 0, 0, true, 2, 1, 8); //venus
-    var particleSEarth = createParticleSystem(0x1E35BC, 30000, "disc.png", 180, 0, 0, true, 2, 1, 7); //earth
-    var particleSMars = createParticleSystem(0xDB5525 ,20000, "disc.png", 215, 0, 0, true, 2, 1, 4); //mars
-    var particleSJupiter = createParticleSystem(0xC1Ac8F, 60000, "particle.png", 280, 0, 0, true, 3, 1, 30); //jupiter
-    var particleSSaturn = createParticleSystem(0xC1B95B, 60000, "particle.png", 370, 0, 0, true, 3, 1, 27); //saturn
-    var particleSUranus = createParticleSystem(0x408BB7, 30000, "disc.png", 450, 0, 0, true, 2, 1, 17); //uranus
-    var particleSNeptune = createParticleSystem(0x408BB7, 40000, "particle.png", 500, 0, 0, true, 2, 1, 17); //neptune
-    var trialps = createParticleSystem1(0x1E35BC, 30000, "disc.png", -200, 0, 0, true, 2, 1, 7, 180, 180)
+    particleSMercury = createParticleSystem(0x86989D, 10000, "disc.png", 110, 0, 0, true, 2, 1, 3); //mercury
+    particleSVenus = createParticleSystem(0xDD9939, 30000, "disc.png", 140, 0, 0, true, 2, 1, 8); //venus
+    particleSEarth = createParticleSystem(0x1E35BC, 30000, "disc.png", 180, 0, 0, true, 2, 1, 7); //earth
+    particleSMars = createParticleSystem(0xDB5525 ,20000, "disc.png", 215, 0, 0, true, 2, 1, 4); //mars
+    particleSJupiter = createParticleSystem(0xC1Ac8F, 60000, "particle.png", 280, 0, 0, true, 3, 1, 30); //jupiter
+    particleSSaturn = createParticleSystem(0xC1B95B, 60000, "particle.png", 370, 0, 0, true, 3, 1, 27); //saturn
+    particleSUranus = createParticleSystem(0x408BB7, 30000, "disc.png", 450, 0, 0, true, 2, 1, 17); //uranus
+    particleSNeptune = createParticleSystem(0x408BB7, 40000, "particle.png", 500, 0, 0, true, 2, 1, 17); //neptune
+    var innerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "disc.png", 370, 0, 0, true, 3, 12, 40, 360, 0);
+    var outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 370, 0, 0, true, 3, 6, 51, 360, 0);
 
     scene.add(particleSSun);
     scene.add(particleSSun1);
@@ -69,7 +72,21 @@ function init() {
     scene.add(particleSSaturn);
     scene.add(particleSUranus);
     scene.add(particleSNeptune);
-    scene.add(trialps);
+    scene.add(innerRingSaturn);
+    scene.add(outerRingSaturn);
+
+    pivot = new THREE.Group();
+    scene.add( pivot );
+    pivot.add( particleSMercury );
+    pivot.add( particleSVenus );
+    pivot.add( particleSEarth );
+    pivot.add( particleSMars );
+    pivot.add( particleSJupiter );
+    pivot.add( particleSSaturn );
+    pivot.add( particleSUranus );
+    pivot.add( particleSNeptune );
+    pivot.add( innerRingSaturn );
+    pivot.add( outerRingSaturn );
     loadSkyBox();
 
     render();
@@ -126,7 +143,7 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
     return particleSystem;
 }
 
-function createParticleSystem1(color, particleCount, image, startX, startY, startZ, isTransparent, size, oRadius, iRadius ,j ,k) {
+function createParticleSystemRing(color, particleCount, image, startX, startY, startZ, isTransparent, size, oRadius, iRadius ,j ,k) {
 
     // The number of particles in a particle system is not easily changed.
     // var particleCount = 10000;
@@ -182,6 +199,8 @@ function animate() {
     render();
     requestAnimationFrame( animate );
     camera.lookAt( scene.position ); // the origin
+    particleSJupiter.rotation.y += 0.01;
+    pivot.rotation.y += 0.01;
 }
 
 
