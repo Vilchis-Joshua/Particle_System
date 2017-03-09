@@ -9,10 +9,24 @@ var particleSystem;
 var lx, ly, lx;
 var controls;
 var particleSMercury, particleSVenus, particleSEarth, particleSMars, particleSJupiter, particleSSaturn, particleSUranus, particleSNeptune;
-var pivot;
+var pivot, pivotMecury, pivotVenus, pivotEarth, pivotMars, pivotJupiter, pivotSaturn, pivotUranus, pivotNeptune;
+var pivotOuterRingSaturn, pivotInnerRingSaturn;
+var innerRingSaturn, outerRingSaturn;
 
 //Point lights
 var pointLight;
+
+//Speeds of the planets
+var mecurySpeed = 0.08;
+var venusSpeed = 0.06;
+var earthSpeed = 0.04;
+var marsSpeed = 0.02;
+var jupiterSpeed = 0.01;
+var saturnSpeed = 0.009;
+var innerRingSpeed = saturnSpeed;
+var outterRingSpeed = saturnSpeed;
+var uranusSpeed = 0.007;
+var neptuneSpeed = 0.005;
 
 init();
 animate();
@@ -59,8 +73,8 @@ function init() {
     particleSSaturn = createParticleSystem(0xC1B95B, 60000, "particle.png", 370, 0, 0, true, 3, 1, 27); //saturn
     particleSUranus = createParticleSystem(0x408BB7, 30000, "disc.png", 450, 0, 0, true, 2, 1, 17); //uranus
     particleSNeptune = createParticleSystem(0x408BB7, 40000, "particle.png", 500, 0, 0, true, 2, 1, 17); //neptune
-    var innerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "disc.png", 370, 0, 0, true, 3, 12, 40, 360, 0);
-    var outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 370, 0, 0, true, 3, 6, 51, 360, 0);
+    innerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "disc.png", 370, 0, 0, true, 3, 12, 40, 360, 0);
+    outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 370, 0, 0, true, 3, 6, 51, 360, 0);
 
     scene.add(particleSSun);
     scene.add(particleSSun1);
@@ -75,18 +89,51 @@ function init() {
     scene.add(innerRingSaturn);
     scene.add(outerRingSaturn);
 
+    //Sun
     pivot = new THREE.Group();
+    //Mecury
+    pivotMecury = new THREE.Group();
+    pivotMecury.add( particleSMercury );
+    //Venus
+    pivotVenus = new THREE.Group();
+    pivotVenus.add( particleSVenus );
+    //Earth
+    pivotEarth = new THREE.Group();
+    pivotEarth.add( particleSEarth );
+    //Mars
+    pivotMars = new THREE.Group();
+    pivotMars.add( particleSMars );
+    //Jupiter
+    pivotJupiter = new THREE.Group();
+    scene.add( pivotJupiter );
+    pivotJupiter.add( particleSJupiter );
+    //Saturn
+    pivotSaturn = new THREE.Group();
+    pivotSaturn.add( particleSSaturn );
+    //Uranus
+    pivotUranus = new THREE.Group();
+    pivotUranus.add( particleSUranus );
+    //Neptune
+    pivotNeptune = new THREE.Group();
+    pivotNeptune.add( particleSNeptune );
+    //Saturn rings
+    pivotInnerRingSaturn = new THREE.Group();
+    pivotOuterRingSaturn = new THREE.Group();
+    pivotInnerRingSaturn.add ( innerRingSaturn )
+    pivotOuterRingSaturn.add( outerRingSaturn );
+
     scene.add( pivot );
-    pivot.add( particleSMercury );
-    pivot.add( particleSVenus );
-    pivot.add( particleSEarth );
-    pivot.add( particleSMars );
-    pivot.add( particleSJupiter );
-    pivot.add( particleSSaturn );
-    pivot.add( particleSUranus );
-    pivot.add( particleSNeptune );
-    pivot.add( innerRingSaturn );
-    pivot.add( outerRingSaturn );
+    scene.add( pivotMecury );
+    scene.add( pivotVenus );
+    scene.add( pivotEarth );
+    scene.add( pivotMars );
+    scene.add( pivotSaturn );
+    scene.add( pivotUranus );
+    scene.add( pivotNeptune );
+    scene.add( pivotInnerRingSaturn );
+    scene.add( pivotOuterRingSaturn );
+
+
     loadSkyBox();
 
     render();
@@ -198,9 +245,30 @@ function animate() {
 
     render();
     requestAnimationFrame( animate );
-    camera.lookAt( scene.position ); // the origin
+   //  camera.lookAt( scene.position ); // the origin
     particleSJupiter.rotation.y += 0.01;
-    pivot.rotation.y += 0.01;
+    particleSMercury.rotation.y += 0.01;
+    particleSVenus.rotation.y += 0.01;
+    particleSEarth.rotation.y += 0.01;
+    particleSMars.rotation.y += 0.01;
+    particleSJupiter.rotation.y += 0.01;
+    particleSSaturn.rotation.y += 0.01;
+    particleSUranus.rotation.y += 0.01;
+    particleSNeptune.rotation.y += 0.01;
+    outerRingSaturn.rotation.y += 0.01;
+    innerRingSaturn.rotation.y += 0.01;
+
+   //  pivot.rotation.y += 0.02;
+    pivotMecury.rotation.y += mecurySpeed;
+    pivotVenus.rotation.y += venusSpeed;
+    pivotEarth.rotation.y += earthSpeed;
+    pivotMars.rotation.y += marsSpeed;
+    pivotJupiter.rotation.y += jupiterSpeed;
+    pivotSaturn.rotation.y += saturnSpeed;
+    pivotUranus.rotation.y += uranusSpeed;
+    pivotNeptune.rotation.y += neptuneSpeed;
+    pivotOuterRingSaturn.rotation.y += outterRingSpeed;
+    pivotInnerRingSaturn.rotation.y += innerRingSpeed;
 }
 
 
