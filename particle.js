@@ -8,7 +8,7 @@ var rotationCamera = 0;
 var particleSystem;
 var lx, ly, lx;
 var controls;
-var particleSMercury, particleSVenus, particleSEarth, particleSMars, particleSJupiter, particleSSaturn, particleSUranus, particleSNeptune;
+var ParticleSSun, particleSSun1, particleSMercury, particleSVenus, particleSEarth, particleSMars, particleSJupiter, particleSSaturn, particleSUranus, particleSNeptune;
 var pivot, pivotMecury, pivotVenus, pivotEarth, pivotMars, pivotJupiter, pivotSaturn, pivotUranus, pivotNeptune;
 var pivotOuterRingSaturn, pivotInnerRingSaturn;
 var innerRingSaturn, outerRingSaturn;
@@ -63,8 +63,8 @@ function init() {
     controls.maxDistance = 2000;
     controls.minDistance = 600;
 
-    var particleSSun = createParticleSystem(0xEA7D17, 900000, "disc.png", 0, 0, 0, true, 1, 10, 80); //sun
-    var particleSSun1 = createParticleSystem(0xEEF21F, 100000, "disc.png", 0, 0, 0, true, 4, 80, 40); //sun
+    particleSSun = createParticleSystem(0xEA7D17, 900000, "disc.png", 0, 0, 0, true, 1, 10, 80); //sun
+    particleSSun1 = createParticleSystem(0xEEF21F, 100000, "disc.png", 0, 0, 0, true, 4, 80, 40); //sun
     particleSMercury = createParticleSystem(0x86989D, 10000, "disc.png", -110, 0, 0, true, 2, 1, 3); //mercury
     particleSVenus = createParticleSystem(0xDD9939, 30000, "disc.png", 0, 0, -140, true, 2, 1, 8); //venus
     particleSEarth = createParticleSystem(0x1E35BC, 30000, "disc.png", 0, 0, 180, true, 2, 1, 7); //earth
@@ -191,6 +191,7 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
 }
 
 function createParticleSystemRing(color, particleCount, image, startX, startY, startZ, isTransparent, size, oRadius, iRadius ,j ,k) {
+
     // The number of particles in a particle system is not easily changed.
     // var particleCount = 10000;
 
@@ -245,6 +246,8 @@ function animate() {
     render();
     requestAnimationFrame( animate );
    //  camera.lookAt( scene.position ); // the origin
+
+   animateParticles(particleSSun1);
     particleSJupiter.rotation.y += 0.01;
     particleSMercury.rotation.y += 0.01;
     particleSVenus.rotation.y += 0.01;
@@ -257,7 +260,7 @@ function animate() {
     outerRingSaturn.rotation.y += 0.01;
     innerRingSaturn.rotation.y += 0.01;
 
-    pivot.rotation.y += 0.02;
+   //  pivot.rotation.y += 0.02;
     pivotMecury.rotation.y += mecurySpeed;
     pivotVenus.rotation.y += venusSpeed;
     pivotEarth.rotation.y += earthSpeed;
@@ -323,4 +326,30 @@ function createMaterial( path ) {
     var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5});
 
     return material;
+}
+
+function animateParticles(particleSystems) {
+  var verts = particleSystems.geometry.vertices;
+  for(var i = 0; i < verts.length; i++) {
+    var vert = verts[i];
+
+    var curDist = Math.sqrt(Math.pow(vert.y,2)+Math.pow(vert.x,2)+Math.pow(vert.z,2));
+    if (curDist < -10 || curDist > 10) {
+      var distance = THREE.Math.randFloatSpread(80)- 40;
+      var theta = THREE.Math.randFloatSpread(360);
+      var phi = THREE.Math.randFloatSpread(360);
+
+
+      vert.x = distance * Math.sin(theta) * Math.cos(phi);
+      vert.y = distance * Math.sin(theta) * Math.sin(phi);
+      vert.z = distance * Math.cos(theta);
+    }
+
+    var theta = THREE.Math.randFloatSpread(360);
+    var phi = THREE.Math.randFloatSpread(360);
+    vert.x = vert.x + Math.sin(theta) * Math.cos(phi);
+    vert.y = vert.y + Math.sin(theta) * Math.sin(phi);
+    vert.z = vert.z + Math.cos(theta);
+  }
+  particleSystems.geometry.verticesNeedUpdate = true;
 }
