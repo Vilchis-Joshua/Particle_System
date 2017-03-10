@@ -65,16 +65,16 @@ function init() {
 
     var particleSSun = createParticleSystem(0xEA7D17, 900000, "disc.png", 0, 0, 0, true, 1, 10, 80); //sun
     var particleSSun1 = createParticleSystem(0xEEF21F, 100000, "disc.png", 0, 0, 0, true, 4, 80, 40); //sun
-    particleSMercury = createParticleSystem(0x86989D, 10000, "disc.png", 110, 0, 0, true, 2, 1, 3); //mercury
-    particleSVenus = createParticleSystem(0xDD9939, 30000, "disc.png", 140, 0, 0, true, 2, 1, 8); //venus
-    particleSEarth = createParticleSystem(0x1E35BC, 30000, "disc.png", 180, 0, 0, true, 2, 1, 7); //earth
+    particleSMercury = createParticleSystem(0x86989D, 10000, "disc.png", -110, 0, 0, true, 2, 1, 3); //mercury
+    particleSVenus = createParticleSystem(0xDD9939, 30000, "disc.png", 0, 0, -140, true, 2, 1, 8); //venus
+    particleSEarth = createParticleSystem(0x1E35BC, 30000, "disc.png", 0, 0, 180, true, 2, 1, 7); //earth
     particleSMars = createParticleSystem(0xDB5525 ,20000, "disc.png", 215, 0, 0, true, 2, 1, 4); //mars
-    particleSJupiter = createParticleSystem(0xC1Ac8F, 60000, "particle.png", 280, 0, 0, true, 3, 1, 30); //jupiter
-    particleSSaturn = createParticleSystem(0xC1B95B, 60000, "particle.png", 370, 0, 0, true, 3, 1, 27); //saturn
-    particleSUranus = createParticleSystem(0x408BB7, 30000, "disc.png", 450, 0, 0, true, 2, 1, 17); //uranus
+    particleSJupiter = createParticleSystem(0xC1Ac8F, 60000, "particle.png", 0, 0, -280, true, 3, 1, 30); //jupiter
+    particleSSaturn = createParticleSystem(0xC1B95B, 60000, "particle.png", 0, 0, 370, true, 3, 1, 27); //saturn
+    particleSUranus = createParticleSystem(0x408BB7, 30000, "disc.png", -450, 0, 0, true, 2, 1, 17); //uranus
     particleSNeptune = createParticleSystem(0x408BB7, 40000, "particle.png", 500, 0, 0, true, 2, 1, 17); //neptune
-    innerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "disc.png", 370, 0, 0, true, 3, 12, 40, 360, 0);
-    outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 370, 0, 0, true, 3, 6, 51, 360, 0);
+    innerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "disc.png", 0, 0, 370, true, 3, 12, 40, 360, 0);
+    outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 0, 0, 370, true, 3, 6, 51, 360, 0);
 
     scene.add(particleSSun);
     scene.add(particleSSun1);
@@ -191,7 +191,6 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
 }
 
 function createParticleSystemRing(color, particleCount, image, startX, startY, startZ, isTransparent, size, oRadius, iRadius ,j ,k) {
-
     // The number of particles in a particle system is not easily changed.
     // var particleCount = 10000;
 
@@ -258,7 +257,7 @@ function animate() {
     outerRingSaturn.rotation.y += 0.01;
     innerRingSaturn.rotation.y += 0.01;
 
-   //  pivot.rotation.y += 0.02;
+    pivot.rotation.y += 0.02;
     pivotMecury.rotation.y += mecurySpeed;
     pivotVenus.rotation.y += venusSpeed;
     pivotEarth.rotation.y += earthSpeed;
