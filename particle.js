@@ -53,6 +53,31 @@ function init() {
     controls.maxDistance = 2000;
     controls.minDistance = 600;
 
+  // var cubeGeometry = new THREE.CubeGeometry( 10, 10, 10, 30, 30, 30 );
+  var triangleGeometry = new THREE.Geometry();
+triangleGeometry.vertices.push(new THREE.Vector3( 0.0,  20.0, 0.0));
+triangleGeometry.vertices.push(new THREE.Vector3(-20.0, -20.0, 0.0));
+triangleGeometry.vertices.push(new THREE.Vector3( 20.0, -20.0, 0.0));
+triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
+
+	var discTexture = new THREE.PointCloudMaterial({color: 0xFFFFCC, side:THREE.DoubleSide});
+	var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+	var particleCube = new THREE.PointCloud( triangleGeometry, discTexture );
+	particleCube.position.set(0, 0, -400);
+
+	scene.add( particleCube );
+
+
+
+// var triangleMaterial = new THREE.MeshBasicMaterial({
+//color:0xFFFFFF,
+//side:THREE.DoubleSide
+//});
+
+// var triangleMesh = new THREE.Mesh(triangleGeometry, discTexture);
+// triangleMesh.position.set(0, 0.0, -400);
+// scene.add(triangleMesh);
+
 
     parameters = new function () {
       this.rotatoP = 0;
@@ -66,7 +91,9 @@ function init() {
     addSunAndPlanets();
     addMoons();
     addPivots();
-    loadSkyBox();
+    //loadSkyBox();
+
+
 
 
     render();
@@ -241,7 +268,7 @@ function addSunAndPlanets() {
   innerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "disc.png", 0, 0, 370, true, 3, 12, 40, 360, 0);
   outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 0, 0, 370, true, 3, 6, 51, 360, 0);
   ringJupiter = createParticleSystemRing(0xEFBE5B, 1000, "particle.png", 0, 0, -280, true, 3, 12, 35, 360, 0);
-  eyeOfTheTiget = createParticleSystem(0xEFBE5B, 10000, "particle.png", 0, 0, -30, true, 2, 1, 2);
+  eyeOfTheTiget = createParticleSystemRing(0xc6910b, 10000, "particle.png", 0, 0, -24.5, true, 2, 0, 6, 1, 360);
 
   scene.add(particleSSun);
   scene.add(particleSSun1);
