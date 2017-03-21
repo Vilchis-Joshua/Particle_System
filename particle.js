@@ -13,6 +13,7 @@ var pivot, pivotMecury, pivotVenus, pivotEarth, pivotMars, pivotJupiter, pivotSa
 var pivotOuterRingSaturn, pivotInnerRingSaturn;
 var innerRingSaturn, outerRingSaturn;
 var parameters;
+var na, filler;
 
 //Point lights
 var pointLight;
@@ -54,18 +55,13 @@ function init() {
     controls.minDistance = 600;
 
   // var cubeGeometry = new THREE.CubeGeometry( 10, 10, 10, 30, 30, 30 );
-  var triangleGeometry = new THREE.Geometry();
-triangleGeometry.vertices.push(new THREE.Vector3( 0.0,  20.0, 0.0));
-triangleGeometry.vertices.push(new THREE.Vector3(-20.0, -20.0, 0.0));
-triangleGeometry.vertices.push(new THREE.Vector3( 20.0, -20.0, 0.0));
-triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
+  // var triangleGeometry = new THREE.Geometry();
+  // triangleGeometry.vertices.push(new THREE.Vector3( 0.0,  20.0, 0.0));
+  // triangleGeometry.vertices.push(new THREE.Vector3(-20.0, -20.0, 0.0));
+  // triangleGeometry.vertices.push(new THREE.Vector3( 20.0, -20.0, 0.0));
+  // triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
 
-	var discTexture = new THREE.PointCloudMaterial({color: 0xFFFFCC, side:THREE.DoubleSide});
-	var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
-	var particleCube = new THREE.PointCloud( triangleGeometry, discTexture );
-	particleCube.position.set(0, 0, -400);
 
-	scene.add( particleCube );
 
 
 
@@ -90,8 +86,8 @@ triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
 
     addSunAndPlanets();
     addMoons();
+    addContinents();
     addPivots();
-    //loadSkyBox();
 
 
 
@@ -130,6 +126,60 @@ function onWindowResize() {
 // function reset() {
 //   init();
 // }
+
+function createTriangle3() {
+  var x = 0, y = 0;
+
+  var heartShape = new THREE.Shape();
+
+  // for(var i = 0; i < 5; i++) {
+  //   heartShape.moveTo( x, y );
+  //   heartShape.bezierCurveTo(x - 3.5, y + 2);
+  //   heartShape.bezierCurveTo(x - 1.5, y - 1.5);
+  //
+  //   heartShape.bezierCurveTo()
+  //   // heartShape.bezierCurveTo(x + 5 - i, y - 5 + i);
+  //   // heartShape.bezierCurveTo(x - 5 + (2 * i), y - 5);
+  // }
+
+  var heartShape = new THREE.Shape();
+
+heartShape.moveTo( 0, 0 );
+
+heartShape.bezierCurveTo( -6/4, 0, -6/4, -7/4, -6/4, -5/4);
+heartShape.bezierCurveTo( -5/4, -8/4, -4/4, -8/4, -3/4, -8/4 );
+heartShape.bezierCurveTo( -3/4, -8/4, -1/4, -4/4, 1/4, -8/4);
+heartShape.bezierCurveTo( 1/4, -8/4, 4/4, -10/4, 7/4, -6/4);
+heartShape.bezierCurveTo( 7/4, -6/4, 6/4, -10/4, 3/4, -11/4);
+heartShape.bezierCurveTo( 3/4, -11/4, -9/4, -16/4, -11/4, -1/4);
+heartShape.bezierCurveTo( -11/4, -1/4, -14/4, 0, -11/4, -10/4);
+heartShape.bezierCurveTo( -11/4, -10/4, -13/4, -13/4, -16/4, 1/4);
+heartShape.bezierCurveTo( -16/4, 1/4, -18/4, 4/4, -15/4, 10/4);
+heartShape.bezierCurveTo( -15/4, 10/4, -11/4, 18/4, -24/4, 15/4);
+heartShape.bezierCurveTo( -24/4, 15/4, -15/4, 25/4, -12/4, 19/4);
+heartShape.bezierCurveTo( -12/4, 19/4, -8/4, 15/4, -6/4, 18/4);
+heartShape.bezierCurveTo( -6/4, 18/4, 2/4, 18/4, -4/4, 11/4);
+heartShape.bezierCurveTo( -4/4, 11/4, 6/4, 8/4, 2/4, 16/4);
+heartShape.bezierCurveTo( 2/4, 16/4, 16/4, 16/4, 7/4, 10/4);
+heartShape.bezierCurveTo( 7/4, 10/4, 15/4, 10/4, 7/4, 0);
+heartShape.bezierCurveTo( 7/4, 0, 12/4, -5/4, 9/4, -5/4);
+heartShape.bezierCurveTo( 9/4, -5/4, 7/4 ,0);
+  var geometry = new THREE.ShapeGeometry( heartShape, 100 );
+
+	var discTexture = new THREE.PointCloudMaterial({color: 0x256818});
+	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+	var particleCube = new THREE.PointCloud( geometry, discTexture );
+	particleCube.position.set(0, 0, 7);
+
+  return particleCube;
+	//scene.add( particleCube );
+}
+
+function addContinents() {
+  na = createTriangle3();
+
+  scene.add( na );
+}
 
 function addParameters(param) {
   var gui = new dat.GUI();
@@ -254,12 +304,66 @@ function createParticleSystemRing(color, particleCount, image, startX, startY, s
     return particleSystem;
 }
 
+function createTriangle(size, tcolor, posX, posY, posZ) {
+  var x = 0, y = 0;
+
+  var heartShape = new THREE.Shape();
+
+  for(var i = 0; i < size; i++) {
+    // heartShape.moveTo( x + 5, y + 5 );
+    heartShape.bezierCurveTo(x + i, y + i);
+    heartShape.bezierCurveTo(x - size + i, y + size - i);
+    heartShape.bezierCurveTo(x + size - (2 * i), y + size);
+  }
+  var geometry = new THREE.ShapeGeometry( heartShape, 100);
+
+	var discTexture = new THREE.PointCloudMaterial({color: tcolor});
+	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+	var particleCube = new THREE.PointCloud( geometry, discTexture );
+	particleCube.position.set(posX, posY, posZ);
+
+  return particleCube;
+	//scene.add( particleCube );
+}
+
+function createTriangle2(size, tcolor, posX, posY, posZ) {
+  var x = 0, y = 0;
+
+  var heartShape = new THREE.Shape();
+
+  for(var i = 0; i < size; i++) {
+    // heartShape.moveTo( x + 5, y + 5 );
+    heartShape.bezierCurveTo(x - i, y - i);
+    heartShape.bezierCurveTo(x + size - i, y - size + i);
+    heartShape.bezierCurveTo(x - size + (2 * i), y - size);
+  }
+  var geometry = new THREE.ShapeGeometry( heartShape );
+
+	var discTexture = new THREE.PointCloudMaterial({color: tcolor});
+	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+	var particleCube = new THREE.PointCloud( geometry, discTexture );
+	particleCube.position.set(posX, posY, posZ);
+
+  return particleCube;
+	//scene.add( particleCube );
+}
+
+// function addContinents() {
+//   na = createTriangle3();
+//   filer = createTriangle2(8, 0x256818, 0, 0, 7);
+//
+//
+//   scene.add( na );
+//   scene.add( filler );
+// }
+
+
 function addSunAndPlanets() {
   particleSSun = createParticleSystem(0xEA7D17, 700000, "disc.png", 0, 0, 0, true, 1, 10, 80); //sun
   particleSSun1 = createParticleSystem(0xEEF21F, 100000, "disc.png", 0, 0, 0, true, 4, 80, 40); //sun
   particleSMercury = createParticleSystem(0x86989D, 10000, "disc.png", -110, 0, 0, true, 2, 1, 3); //mercury
   particleSVenus = createParticleSystem(0xDD9939, 30000, "disc.png", 0, 0, -140, true, 2, 1, 8); //venus
-  particleSEarth = createParticleSystem(0x1E35BC, 30000, "disc.png", 0, 0, 180, true, 2, 1, 7); //earth
+  particleSEarth = createParticleSystem(0x1E35BC, 30000, "particle.png", 0, 0, 180, true, 2, 1, 7); //earth
   particleSMars = createParticleSystem(0xDB5525 ,20000, "disc.png", 215, 0, 0, true, 2, 1, 4); //mars
   particleSJupiter = createParticleSystem(0xC1Ac8F, 60000, "particle.png", 0, 0, -280, true, 2, 3, 30); //jupiter
   particleSSaturn = createParticleSystem(0xC1B95B, 60000, "particle.png", 0, 0, 370, true, 3, 1, 27); //saturn
@@ -269,6 +373,8 @@ function addSunAndPlanets() {
   outerRingSaturn = createParticleSystemRing(0xEFBE5B, 10000, "particle.png", 0, 0, 370, true, 3, 6, 51, 360, 0);
   ringJupiter = createParticleSystemRing(0xEFBE5B, 1000, "particle.png", 0, 0, -280, true, 3, 12, 35, 360, 0);
   eyeOfTheTiget = createParticleSystemRing(0xc6910b, 10000, "particle.png", 0, 0, -24.5, true, 2, 0, 6, 1, 360);
+
+
 
   scene.add(particleSSun);
   scene.add(particleSSun1);
@@ -332,7 +438,8 @@ function rotatePlanets() {
   outerRingSaturn.rotation.y += 0.015;
   innerRingSaturn.rotation.y += 0.02;
   pivotEye.rotation.y += 0.0266;
-
+  pivotContinents.rotation.y += 0.01;
+  ringJupiter.rotation.y += 0.0255;
 }
 
 function addPivots() {
@@ -347,9 +454,15 @@ function addPivots() {
   pivotEarthMoon.position.set(0, 0, 180);
   pivotEarthMoon.add( earthMoon );
 
+  pivotContinents = new THREE.Group();
+  pivotContinents.position.set(0, 0, 180);
+  pivotContinents.add( na );
+  pivotContinents.add( filler );
+
   pivotEarth = new THREE.Group();
   pivotEarth.add( particleSEarth );
-  pivotEarth.add( pivotEarthMoon )
+  pivotEarth.add( pivotEarthMoon );
+  pivotEarth.add( pivotContinents );
   //Mars
   pivotMarsMoon = new THREE.Group();
   pivotMarsMoon.position.set(215, 0, 0);
