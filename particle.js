@@ -72,14 +72,13 @@ function init() {
 
     addParameters(parameters);
 
-
     //addPaths();
     addSunAndPlanets();
     addMoons();
     addContinents();
     addPivots();
 
-
+    createPlanetNameText();
 
 
 
@@ -726,6 +725,7 @@ function blowUpSun(particleSystems) {
   particleSystems.geometry.verticesNeedUpdate = true;
 }
 
+
 function createText(theText, theColor, theSize, x, y, z, scene) {
    var fontLoader = new THREE.FontLoader();
    fontLoader.load("optimer_bold.typeface.json", function(theFont) {
@@ -738,19 +738,18 @@ function createText(theText, theColor, theSize, x, y, z, scene) {
  var textMaterial = new THREE.MeshBasicMaterial({color: theColor});
  var mesh = new THREE.Mesh(textGeometry, textMaterial);
  mesh.position.set(x, y, z);
- // return mesh;
  scene.add(mesh);
  });
 }
 
 function createPlanetNameText() {
-    createText("Sun", 0xffff00, 30, -30, 100, 0, scene);
-   createText("Mecury", 0xd3d3d3, 30, -110, 100, 0, scene);
-   //     createText("Venus", 0xd3d3d3, 30, 0, 100, -140, scene);
-   //     createText("Earth", 0x0000ff, 30, 0, 100, 180, scene);
-   //     createText("Mars", 0xd3d3d3, 30, 215, 100, 0, scene);
-   //     createText("Jupiter", 0xd3d3d3, 30, 0, 100, -280, scene);
-   //     createText("Saturn", 0xd3d3d3, 30, 0, 100, 370, scene);
-   //     createText("Uranus", 0xd3d3d3, 30, -450, 100, 0, scene);
-   //     createText("Neptune", 0xd3d3d3, 30, 500, 100, 0, scene);
-    }
+       createText("Sun", 0xffff00, 30, -30, 100, 0, scene);
+       createText("Mecury", 0xd3d3d3, 30, -110, 100, 0, scene);
+       createText("Venus", 0xd3d3d3, 30, 0, 100, -140, scene);
+       createText("Earth", 0x0000ff, 30, 0, 100, 180, scene);
+       createText("Mars", 0xd3d3d3, 30, 215, 100, 0, scene);
+       createText("Jupiter", 0xd3d3d3, 30, 0, 100, -280, scene);
+       createText("Saturn", 0xd3d3d3, 30, 0, 100, 370, scene);
+       createText("Uranus", 0xd3d3d3, 30, -450, 100, 0, scene);
+       createText("Neptune", 0xd3d3d3, 30, 500, 100, 0, scene);
+}
