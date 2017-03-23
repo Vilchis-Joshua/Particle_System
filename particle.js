@@ -173,7 +173,7 @@ heartShape.bezierCurveTo( 9/4, -5/4, 7/4 ,0);
 
 function addParameters(param) {
   var gui = new dat.GUI();
-  gui.add(param, 'rotatoP', 0, 10000, 1).name('Rotation Modifier');
+  gui.add(param, 'rotatoP', 0, 10000).name('Rotation Modifier');
   var pathCont = gui.add(param, 'ShowPath').name('Path');
   pathCont.onChange(function(value) {
     if(value == true) {
