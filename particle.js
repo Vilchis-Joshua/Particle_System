@@ -15,7 +15,8 @@ var innerRingSaturn, outerRingSaturn;
 var parameters;
 var na, filler;
 var pathMercury, pathVenus, pathEarth, pathMars, pathJupiter, pathSaturn, pathUranus, pathNeptune;
-var earthText;
+var textSun, textMercury, textVenus, textEarth, textMars, textJupiter, textSaturn, textUranus, textNeptune;
+
 //Point lights
 var pointLight;
 
@@ -67,18 +68,23 @@ function init() {
       this.showSaturn = false;
       this.showUranus = false;
       this.showNeptune = false;
+      // this.showText = false;
       //this.reset = function () { reset() };
     };
 
     addParameters(parameters);
 
-    //addPaths();
+
     addSunAndPlanets();
     addMoons();
     addContinents();
-    addPivots();
 
-    createPlanetNameText();
+    addPivots();
+        createPlanetNameText();
+
+
+
+
 
 
 
@@ -196,13 +202,13 @@ function addParameters(param) {
     mercuryCont.onChange(function(value) {
       if (value == true) {
         //camera.lookAt( particleSEarth.position );
-        pivotMecury.add(camera);
+        pivotMercury.add(camera);
 
         camera.lookAt(particleSMercury.position);
         camera.position.set(300, 200, 300);
       }
       else {
-        pivotMecury.remove(camera);
+        pivotMercury.remove(camera);
         camera.position.x = 1200;
         camera.position.y = 800;
         camera.position.z = 1000;
@@ -298,7 +304,7 @@ saturnCont.onChange(function(value) {
     pivotSaturn.add(camera);
 
     camera.lookAt(particleSSaturn.position);
-    camera.position.set(500, 250, 550);
+    camera.position.set(450, 200, 600);
   }
   else {
     pivotSaturn.remove(camera);
@@ -318,7 +324,7 @@ uranusCont.onChange(function(value) {
     pivotUranus.add(camera);
 
     camera.lookAt(particleSUranus.position);
-    camera.position.set(500, 300, 600);
+    camera.position.set(450, 200, 700);
   }
   else {
     pivotUranus.remove(camera);
@@ -338,7 +344,7 @@ neptuneCont.onChange(function(value) {
     pivotNeptune.add(camera);
 
     camera.lookAt(particleSNeptune.position);
-    camera.position.set(600, 300, 700);
+    camera.position.set(450, 200, 700);
   }
   else {
     pivotNeptune.remove(camera);
@@ -350,6 +356,17 @@ neptuneCont.onChange(function(value) {
   }
 }
 );
+
+// var textCont = gui.add(param, 'showText').name('Show Planet Names');
+// textCont.onChange(function(value) {
+//   if (value == true) {
+//     createPlanetNameText();
+//   }
+//   else {
+//
+//   }
+// }
+// );
 
   //f1.open();
   gui.open();
@@ -544,7 +561,7 @@ function addMoons() {
 
 function rotateAroundSun() {
 
-  pivotMecury.rotation.y += (parameters.rotatoP * mecurySpeed);
+  pivotMercury.rotation.y += (parameters.rotatoP * mecurySpeed);
   pivotVenus.rotation.y += (parameters.rotatoP * venusSpeed);
   pivotEarth.rotation.y += (parameters.rotatoP * earthSpeed);
   pivotMars.rotation.y += (parameters.rotatoP * marsSpeed);
@@ -582,8 +599,9 @@ function rotatePlanets() {
 
 function addPivots() {
   //Mecury
-  pivotMecury = new THREE.Group();
-  pivotMecury.add( particleSMercury );
+  pivotMercury = new THREE.Group();
+  pivotMercury.add( particleSMercury );
+  pivotMercury.add( textMercury );
   //Venus
   pivotVenus = new THREE.Group();
   pivotVenus.add( particleSVenus );
@@ -644,7 +662,7 @@ function addPivots() {
 
 
 
-  scene.add( pivotMecury );
+  scene.add( pivotMercury );
   scene.add( pivotVenus );
   scene.add( pivotEarth );
   scene.add( pivotMars );
@@ -725,31 +743,34 @@ function blowUpSun(particleSystems) {
   particleSystems.geometry.verticesNeedUpdate = true;
 }
 
-
-function createText(theText, theColor, theSize, x, y, z, scene) {
+function createText(theText, theColor, theSize, x, y, z, scene, pivot) {
    var fontLoader = new THREE.FontLoader();
    fontLoader.load("optimer_bold.typeface.json", function(theFont) {
      var textGeometry = new THREE.TextGeometry(theText, {
      size: theSize,
-     height: 20,
-     curveSegments: 6,
+     height: 1,
+     curveSegments: 5,
      font: theFont
+    });
+    var textMaterial = new THREE.MeshBasicMaterial({color: theColor});
+    var mesh = new THREE.Mesh(textGeometry, textMaterial);
+    mesh.position.set(x, y, z);
+    scene.add(mesh);
+    pivot.add(mesh);
  });
- var textMaterial = new THREE.MeshBasicMaterial({color: theColor});
- var mesh = new THREE.Mesh(textGeometry, textMaterial);
- mesh.position.set(x, y, z);
- scene.add(mesh);
- });
+
 }
 
 function createPlanetNameText() {
-       createText("Sun", 0xffff00, 30, -30, 100, 0, scene);
-       createText("Mecury", 0xd3d3d3, 30, -110, 100, 0, scene);
-       createText("Venus", 0xd3d3d3, 30, 0, 100, -140, scene);
-       createText("Earth", 0x0000ff, 30, 0, 100, 180, scene);
-       createText("Mars", 0xd3d3d3, 30, 215, 100, 0, scene);
-       createText("Jupiter", 0xd3d3d3, 30, 0, 100, -280, scene);
-       createText("Saturn", 0xd3d3d3, 30, 0, 100, 370, scene);
-       createText("Uranus", 0xd3d3d3, 30, -450, 100, 0, scene);
-       createText("Neptune", 0xd3d3d3, 30, 500, 100, 0, scene);
+    // textSun = createText("Sun", 0xffff00, 30, -30, 100, 0, scene);
+    createText("Mercury", 0xd3d3d3, 20, -50, 45, 100, scene, pivotMercury);
+    createText("Venus", 0xd3d3d3, 20, -40, 45, 130, scene, pivotVenus);
+    createText("Earth", 0x0000ff, 20, -35, 45, 170, scene, pivotEarth);
+    createText("Mars", 0xd3d3d3, 20, -35, 45, 205, scene, pivotMars);
+    createText("Jupiter", 0xd3d3d3, 20, -40, 45, 270, scene, pivotJupiter);
+    createText("Saturn", 0xd3d3d3, 20, -40, 45, 380, scene, pivotSaturn);
+    createText("Uranus", 0xd3d3d3, 20, -40, 45,470, scene, pivotUranus);
+    createText("Neptune", 0xd3d3d3, 20, -50, 45, 520, scene, pivotNeptune);
+
+
 }
