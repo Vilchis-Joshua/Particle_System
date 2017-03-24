@@ -8,12 +8,12 @@ var rotationCamera = 0;
 var particleSystem;
 var lx, ly, lx;
 var controls;
-var ParticleSSun, particleSSun1, particleSMercury, particleSVenus, particleSEarth, particleSMars, particleSJupiter, particleSSaturn, particleSUranus, particleSNeptune;
+var ParticleSSun, particleSSun1, particleSSun2, particleSMercury, particleSVenus, particleSEarth, particleSMars, particleSJupiter, particleSSaturn, particleSUranus, particleSNeptune;
 var pivot, pivotMecury, pivotVenus, pivotEarth, pivotMars, pivotJupiter, pivotSaturn, pivotUranus, pivotNeptune;
 var pivotOuterRingSaturn, pivotInnerRingSaturn;
 var innerRingSaturn, outerRingSaturn;
 var parameters;
-var na, filler;
+var na
 var pathMercury, pathVenus, pathEarth, pathMars, pathJupiter, pathSaturn, pathUranus, pathNeptune;
 var textSun, textMercury, textVenus, textEarth, textMars, textJupiter, textSaturn, textUranus, textNeptune;
 
@@ -68,6 +68,7 @@ function init() {
       this.showSaturn = false;
       this.showUranus = false;
       this.showNeptune = false;
+      this.explode = false;
       // this.showText = false;
       //this.reset = function () { reset() };
     };
@@ -129,41 +130,41 @@ function onWindowResize() {
 function createTriangle3() {
   var x = 0, y = 0;
 
-  var heartShape = new THREE.Shape();
+  var shape = new THREE.Shape();
 
   // for(var i = 0; i < 5; i++) {
-  //   heartShape.moveTo( x, y );
-  //   heartShape.bezierCurveTo(x - 3.5, y + 2);
-  //   heartShape.bezierCurveTo(x - 1.5, y - 1.5);
+  //   shape.moveTo( x, y );
+  //   shape.bezierCurveTo(x - 3.5, y + 2);
+  //   shape.bezierCurveTo(x - 1.5, y - 1.5);
   //
-  //   heartShape.bezierCurveTo()
-  //   // heartShape.bezierCurveTo(x + 5 - i, y - 5 + i);
-  //   // heartShape.bezierCurveTo(x - 5 + (2 * i), y - 5);
+  //   shape.bezierCurveTo()
+  //   // shape.bezierCurveTo(x + 5 - i, y - 5 + i);
+  //   // shape.bezierCurveTo(x - 5 + (2 * i), y - 5);
   // }
 
-  var heartShape = new THREE.Shape();
+  var shape = new THREE.Shape();
 
-heartShape.moveTo( 0, 0 );
+shape.moveTo( 0, 0 );
 
-heartShape.bezierCurveTo( -6/4, 0, -6/4, -7/4, -6/4, -5/4);
-heartShape.bezierCurveTo( -5/4, -8/4, -4/4, -8/4, -3/4, -8/4 );
-heartShape.bezierCurveTo( -3/4, -8/4, -1/4, -4/4, 1/4, -8/4);
-heartShape.bezierCurveTo( 1/4, -8/4, 4/4, -10/4, 7/4, -6/4);
-heartShape.bezierCurveTo( 7/4, -6/4, 6/4, -10/4, 3/4, -11/4);
-heartShape.bezierCurveTo( 3/4, -11/4, -9/4, -16/4, -11/4, -1/4);
-heartShape.bezierCurveTo( -11/4, -1/4, -14/4, 0, -11/4, -10/4);
-heartShape.bezierCurveTo( -11/4, -10/4, -13/4, -13/4, -16/4, 1/4);
-heartShape.bezierCurveTo( -16/4, 1/4, -18/4, 4/4, -15/4, 10/4);
-heartShape.bezierCurveTo( -15/4, 10/4, -11/4, 18/4, -24/4, 15/4);
-heartShape.bezierCurveTo( -24/4, 15/4, -15/4, 25/4, -12/4, 19/4);
-heartShape.bezierCurveTo( -12/4, 19/4, -8/4, 15/4, -6/4, 18/4);
-heartShape.bezierCurveTo( -6/4, 18/4, 2/4, 18/4, -4/4, 11/4);
-heartShape.bezierCurveTo( -4/4, 11/4, 6/4, 8/4, 2/4, 16/4);
-heartShape.bezierCurveTo( 2/4, 16/4, 16/4, 16/4, 7/4, 10/4);
-heartShape.bezierCurveTo( 7/4, 10/4, 15/4, 10/4, 7/4, 0);
-heartShape.bezierCurveTo( 7/4, 0, 12/4, -5/4, 9/4, -5/4);
-heartShape.bezierCurveTo( 9/4, -5/4, 7/4 ,0);
-  var geometry = new THREE.ShapeGeometry( heartShape, 100 );
+shape.bezierCurveTo( -6/4, 0, -6/4, -7/4, -6/4, -5/4);
+shape.bezierCurveTo( -5/4, -8/4, -4/4, -8/4, -3/4, -8/4 );
+shape.bezierCurveTo( -3/4, -8/4, -1/4, -4/4, 1/4, -8/4);
+shape.bezierCurveTo( 1/4, -8/4, 4/4, -10/4, 7/4, -6/4);
+shape.bezierCurveTo( 7/4, -6/4, 6/4, -10/4, 3/4, -11/4);
+shape.bezierCurveTo( 3/4, -11/4, -9/4, -16/4, -11/4, -1/4);
+shape.bezierCurveTo( -11/4, -1/4, -14/4, 0, -11/4, -10/4);
+shape.bezierCurveTo( -11/4, -10/4, -13/4, -13/4, -16/4, 1/4);
+shape.bezierCurveTo( -16/4, 1/4, -18/4, 4/4, -15/4, 10/4);
+shape.bezierCurveTo( -15/4, 10/4, -11/4, 18/4, -24/4, 15/4);
+shape.bezierCurveTo( -24/4, 15/4, -15/4, 25/4, -12/4, 19/4);
+shape.bezierCurveTo( -12/4, 19/4, -8/4, 15/4, -6/4, 18/4);
+shape.bezierCurveTo( -6/4, 18/4, 2/4, 18/4, -4/4, 11/4);
+shape.bezierCurveTo( -4/4, 11/4, 6/4, 8/4, 2/4, 16/4);
+shape.bezierCurveTo( 2/4, 16/4, 16/4, 16/4, 7/4, 10/4);
+shape.bezierCurveTo( 7/4, 10/4, 15/4, 10/4, 7/4, 0);
+shape.bezierCurveTo( 7/4, 0, 12/4, -5/4, 9/4, -5/4);
+shape.bezierCurveTo( 9/4, -5/4, 7/4 ,0);
+  var geometry = new THREE.ShapeGeometry( shape, 100 );
 
 	var discTexture = new THREE.PointCloudMaterial({color: 0x256818});
 	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
@@ -367,6 +368,60 @@ neptuneCont.onChange(function(value) {
 //   }
 // }
 // );
+
+  var explodeCont = gui.add(param, 'explode').name('EXPLODE');
+  explodeCont.onChange(function(value) {
+    if(value == true) {
+      blowUpSun(particleSSun);
+      scene.remove(particleSSun1);
+      scene.remove(particleSMercury);
+      scene.remove(particleSVenus);
+      scene.remove(particleSEarth);
+      scene.remove(particleSMars);
+      scene.remove(particleSJupiter);
+      scene.remove(particleSSaturn);
+      scene.remove(particleSUranus);
+      scene.remove(particleSNeptune);
+      scene.remove(innerRingSaturn);
+      scene.remove(outerRingSaturn);
+      scene.remove(ringJupiter);
+      scene.remove(eyeOfTheTiget);
+
+      scene.remove(earthMoon);
+
+      scene.remove( pivotMercury );
+      scene.remove( pivotVenus );
+      scene.remove( pivotEarth );
+      scene.remove( pivotMars );
+      scene.remove( pivotJupiter );
+      scene.remove( pivotSaturn );
+      scene.remove( pivotUranus );
+      scene.remove( pivotNeptune );
+
+    }
+    else {
+      scene.remove(particleSSun);
+      particleSSun2 = createParticleSystem(0xEA7D17, 700000, "disc.png", 0, 0, 0, true, 1, 10, 80); //sun
+      scene.add(particleSSun1);
+      scene.add(particleSSun2);
+      scene.add(particleSMercury);
+      scene.add(particleSVenus);
+      scene.add(particleSEarth);
+      scene.add(particleSMars);
+      scene.add(particleSJupiter);
+      scene.add(particleSSaturn);
+      scene.add(particleSUranus);
+      scene.add(particleSNeptune);
+      scene.add(innerRingSaturn);
+      scene.add(outerRingSaturn);
+      scene.add(ringJupiter);
+      scene.add(eyeOfTheTiget);
+
+      scene.add(earthMoon);
+      addPivots();
+      createPlanetNameText();
+    }
+  });
 
   //f1.open();
   gui.open();
@@ -613,7 +668,6 @@ function addPivots() {
   pivotContinents = new THREE.Group();
   pivotContinents.position.set(0, 0, 180);
   pivotContinents.add( na );
-  pivotContinents.add( filler );
 
   pivotEarth = new THREE.Group();
   pivotEarth.add( particleSEarth );
@@ -736,9 +790,9 @@ function blowUpSun(particleSystems) {
 
     var theta = THREE.Math.randFloatSpread(360);
     var phi = THREE.Math.randFloatSpread(360);
-    vert.x = vert.x + Math.sin(theta) * Math.cos(phi) * 100;
-    vert.y = vert.y + Math.sin(theta) * Math.sin(phi) * 100;
-    vert.z = vert.z + Math.cos(theta) * 100;
+    vert.x = vert.x + Math.sin(theta) * Math.cos(phi) * 1000;
+    vert.y = vert.y + Math.sin(theta) * Math.sin(phi) * 1000;
+    vert.z = vert.z + Math.cos(theta) * 1000;
   }
   particleSystems.geometry.verticesNeedUpdate = true;
 }
@@ -762,7 +816,7 @@ function createText(theText, theColor, theSize, x, y, z, scene, pivot) {
 }
 
 function createPlanetNameText() {
-    // textSun = createText("Sun", 0xffff00, 30, -30, 100, 0, scene);
+    createText("Sun", 0xffff00, 30, -30, 100, 0, scene, pivotNeptune);
     createText("Mercury", 0xd3d3d3, 20, -50, 45, 100, scene, pivotMercury);
     createText("Venus", 0xd3d3d3, 20, -40, 45, 130, scene, pivotVenus);
     createText("Earth", 0x0000ff, 20, -35, 45, 170, scene, pivotEarth);
