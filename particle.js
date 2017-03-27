@@ -914,13 +914,13 @@ function createText(theText, theColor, theSize, x, y, z, scene, pivot) {
 
 function createPlanetNameText() {
     createText("Sun", 0xffff00, 30, -30, 100, 0, scene, pivotNeptune);
-    createText("Mercury", 0xd3d3d3, 20, -50, 45, 100, scene, pivotMercury);
-    createText("Venus", 0xd3d3d3, 20, -40, 45, 130, scene, pivotVenus);
-    createText("Earth", 0x0000ff, 20, -35, 45, 170, scene, pivotEarth);
-    createText("Mars", 0xd3d3d3, 20, -35, 45, 205, scene, pivotMars);
-    createText("Jupiter", 0xd3d3d3, 20, -40, 45, 270, scene, pivotJupiter);
-    createText("Saturn", 0xd3d3d3, 20, -40, 45, 380, scene, pivotSaturn);
-    createText("Uranus", 0xd3d3d3, 20, -40, 45,470, scene, pivotUranus);
-    createText("Neptune", 0xd3d3d3, 20, -50, 45, 520, scene, pivotNeptune);
+    createText("Mercury", 0x86989D, 20, -50, 45, 100, scene, pivotMercury);
+    createText("Venus", 0xDD9939, 20, -40, 45, 130, scene, pivotVenus);
+    createText("Earth", 0x1E35BC, 20, -35, 45, 170, scene, pivotEarth);
+    createText("Mars", 0xDB5525, 20, -35, 45, 205, scene, pivotMars);
+    createText("Jupiter", 0xC1Ac8F, 20, -40, 45, 270, scene, pivotJupiter);
+    createText("Saturn", 0xC1B95B, 20, -40, 45, 380, scene, pivotSaturn);
+    createText("Uranus", 0x408BB7, 20, -40, 45,470, scene, pivotUranus);
+    createText("Neptune", 0x408BB7, 20, -50, 45, 520, scene, pivotNeptune);
     createText("CANADA", 0x0ff0000, 30, -100, 320, 1000, scene, asteroidPivot);
 }
