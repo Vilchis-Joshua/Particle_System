@@ -17,6 +17,10 @@ var na
 var pathMercury, pathVenus, pathEarth, pathMars, pathJupiter, pathSaturn, pathUranus, pathNeptune;
 var textSun, textMercury, textVenus, textEarth, textMars, textJupiter, textSaturn, textUranus, textNeptune;
 
+var asteroidPivot;
+
+var asteroid;
+
 //Point lights
 var pointLight;
 
@@ -81,14 +85,9 @@ function init() {
     addContinents();
 
     addPivots();
-        createPlanetNameText();
+    createPlanetNameText();
 
-
-
-
-
-
-
+    createAsteroid();
 
     render();
 }
@@ -125,6 +124,104 @@ function onWindowResize() {
 //   init();
 // }
 
+
+//Canada
+function createAsteroid() {
+
+   asteroid = new THREE.Shape();
+   asteroid.moveTo( 0, 0 );
+
+   asteroid.bezierCurveTo( -20, -1, -40, -2, -60, -3);
+   asteroid.bezierCurveTo( -60, -3, -80 , -2, -100, -1);
+   asteroid.bezierCurveTo( -100, -1, -105 , 25, -106, 45);
+   asteroid.bezierCurveTo( -106, 45,  -104, 44, -101, 45);
+   asteroid.bezierCurveTo( -101, 45, -100 , 55, -102, 70);
+   asteroid.bezierCurveTo( -102, 70, -106 , 72, -109, 67);
+   asteroid.bezierCurveTo( -109, 67, -110, 85, -113, 105);
+   asteroid.bezierCurveTo( -113, 105, -90 , 104, -75, 105);
+   asteroid.bezierCurveTo( -75, 105, -45 , 104, -20, 105);
+   asteroid.bezierCurveTo( -20, 105, 0 , 104, 10, 105);
+   asteroid.bezierCurveTo( 10, 105, -10, 70, 30, 60);
+   asteroid.bezierCurveTo( 30, 60, 40, 57, 50, 58);
+   asteroid.bezierCurveTo( 50, 58, 54, 65, 58, 76);
+   asteroid.bezierCurveTo( 58, 76, 60, 80, 65, 85);
+   asteroid.bezierCurveTo( 65, 85, 74, 86, 80, 78);
+   asteroid.bezierCurveTo( 80, 78, 87, 70, 93, 60);
+   asteroid.bezierCurveTo( 93, 60, 94, 61, 79, 45);
+   asteroid.bezierCurveTo( 79, 45, 78, 43, 65, 30);
+   asteroid.bezierCurveTo( 65, 30, 65, 27, 50, -10);
+   asteroid.bezierCurveTo( 50, -10, 40, -15, 30, -20);
+   asteroid.bezierCurveTo( 30, -20, 15, -10, 0, 0);
+
+   var geometry = new THREE.ShapeGeometry( asteroid, 200 );
+
+ 	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
+ 	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+ 	var particleCube = new THREE.PointCloud( geometry, discTexture );
+ 	particleCube.position.set(0, 300, 1000);
+
+   scene.add(particleCube);
+   // return particleCube;
+}
+
+// function createAsteroid() {
+//
+//    asteroid = new THREE.Shape();
+//    asteroid.moveTo( 0, 0 );
+//
+//    asteroid.bezierCurveTo( -20, -5, -40, -10, -40, 0);
+//    asteroid.bezierCurveTo( -40, 0, -30 , 3, -20, 10);
+//    asteroid.bezierCurveTo( -20, 10, -30 , 20, -40, 40);
+//    asteroid.bezierCurveTo( -40, 40, -30 , 36, -25, 32);
+//    asteroid.bezierCurveTo( -25, 32, -40 , 55, -45, 60);
+//    asteroid.bezierCurveTo( -45, 60, -30 , 50, -20, 40);
+//    asteroid.bezierCurveTo( -20, 40, -23, 50, -25, 55);
+//    asteroid.bezierCurveTo( -25, 55, -15 , 50, -10, 45);
+//    // asteroid.bezierCurveTo( -20, 10, -30 , 3, -20, 10);
+//
+//
+//    var geometry = new THREE.ShapeGeometry( asteroid, 100 );
+//
+//  	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
+//  	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+//  	var particleCube = new THREE.PointCloud( geometry, discTexture );
+//  	particleCube.position.set(0, 300, 1000);
+//
+//    scene.add(particleCube);
+//    // return particleCube;
+// }
+
+
+//fish eating the sun asteroid
+// function createAsteroid() {
+//
+//    asteroid = new THREE.Shape();
+//    asteroid.moveTo( 0, 0 );
+//
+//    asteroid.bezierCurveTo( 0, 0, -10, -5, -20, 0 );
+//    asteroid.bezierCurveTo( -20, 0, -30, -1, -40, 0 );
+//    asteroid.bezierCurveTo( -40, 0, -50, -10, -60, 0 );
+//    asteroid.bezierCurveTo( -60, 0, -100, 10, -130, 30 );
+//    asteroid.bezierCurveTo( -130, 30, -140, -10, -145, 40 );
+//    asteroid.bezierCurveTo( -145, 40, -144, 80, -130, 60 );
+//    asteroid.bezierCurveTo( -130, 60, -129, 50, -130, 45 );
+//    asteroid.bezierCurveTo( -130, 45, -100, 47, -90, 57 );
+//    asteroid.bezierCurveTo( -90, 57, -60, 58, -40, 57 );
+//    asteroid.bezierCurveTo( -40, 57, -20, 58, 0, 57 );
+//    asteroid.bezierCurveTo( 0, 57, 15, 40, 14, 28 );
+//    asteroid.bezierCurveTo( 14, 28, -2, 12, 0, 0 );
+//
+//
+//    var geometry = new THREE.ShapeGeometry( asteroid, 100 );
+//
+//  	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
+//  	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
+//  	var particleCube = new THREE.PointCloud( geometry, discTexture );
+//  	particleCube.position.set(0, 300, 1000);
+//
+//    scene.add(particleCube);
+//    // return particleCube;
+// }
 
 
 function createTriangle3() {
@@ -825,6 +922,5 @@ function createPlanetNameText() {
     createText("Saturn", 0xd3d3d3, 20, -40, 45, 380, scene, pivotSaturn);
     createText("Uranus", 0xd3d3d3, 20, -40, 45,470, scene, pivotUranus);
     createText("Neptune", 0xd3d3d3, 20, -50, 45, 520, scene, pivotNeptune);
-
-
+    createText("CANADA", 0x0ff0000, 30, -100, 320, 1000, scene, asteroidPivot);
 }
