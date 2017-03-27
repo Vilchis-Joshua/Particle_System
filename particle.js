@@ -17,9 +17,9 @@ var na
 var pathMercury, pathVenus, pathEarth, pathMars, pathJupiter, pathSaturn, pathUranus, pathNeptune;
 var textSun, textMercury, textVenus, textEarth, textMars, textJupiter, textSaturn, textUranus, textNeptune;
 
-var asteroidPivot;
+var pivotAsteroid;
 
-var asteroid;
+var asteroid, asteroid2;
 
 //Point lights
 var pointLight;
@@ -61,6 +61,16 @@ function init() {
     controls.minDistance = 600;
 
 
+
+
+
+    addSunAndPlanets();
+    addMoons();
+    addContinents();
+
+    addPivots();
+
+    createPlanetNameText();
     parameters = new function () {
       this.rotatoP = 1;
       this.ShowPath = false;
@@ -80,14 +90,6 @@ function init() {
     addParameters(parameters);
 
 
-    addSunAndPlanets();
-    addMoons();
-    addContinents();
-
-    addPivots();
-    createPlanetNameText();
-
-    createAsteroid();
 
     render();
 }
@@ -158,10 +160,9 @@ function createAsteroid() {
  	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
  	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
  	var particleCube = new THREE.PointCloud( geometry, discTexture );
- 	particleCube.position.set(0, 300, 1000);
+ 	particleCube.position.set(500, 0, 0);
 
-   scene.add(particleCube);
-   // return particleCube;
+   return particleCube;
 }
 
 // function createAsteroid() {
@@ -469,7 +470,11 @@ neptuneCont.onChange(function(value) {
   var explodeCont = gui.add(param, 'explode').name('EXPLODE');
   explodeCont.onChange(function(value) {
     if(value == true) {
+      createText("CANADA", 0x0ff0000, 30, 400, 25, 0, scene, pivotAsteroid);
+      addCanada();
+      pivotAsteroid.add(asteroid2);
       blowUpSun(particleSSun);
+
       scene.remove(particleSSun1);
       scene.remove(particleSMercury);
       scene.remove(particleSVenus);
@@ -644,6 +649,12 @@ function addContinents() {
   scene.add( na );
 }
 
+function addCanada() {
+  asteroid2 = createAsteroid();
+
+  scene.add( asteroid2 );
+}
+
 function addPaths() {
   pathMercury = createParticleSystemRing(0xFFFFFF, 5000, "disc.png", 0, 0, 0, true, 1, 1, 110, 360, 0);
   pathVenus = createParticleSystemRing(0xFFFFFF, 5000, "disc.png", 0, 0, 0, true, 1, 1, 140, 360, 0);
@@ -721,6 +732,7 @@ function rotateAroundSun() {
   pivotSaturn.rotation.y += (parameters.rotatoP * saturnSpeed);
   pivotUranus.rotation.y += (parameters.rotatoP * uranusSpeed);
   pivotNeptune.rotation.y += (parameters.rotatoP * neptuneSpeed);
+  pivotAsteroid.rotation.y += (parameters.rotatoP * mecurySpeed);
 
 
 
@@ -808,11 +820,16 @@ function addPivots() {
   pivotNeptune.add( particleSNeptune );
   // pivotNeptune.add( pivotNeptuneMoon );
 
+  pivotAsteroid = new THREE.Group();
+  pivotAsteroid.position.set(0, 0, 280);
+  pivotAsteroid.add( asteroid2 );
 
 
 
 
 
+
+  scene.add( pivotAsteroid );
   scene.add( pivotMercury );
   scene.add( pivotVenus );
   scene.add( pivotEarth );
@@ -821,6 +838,7 @@ function addPivots() {
   scene.add( pivotSaturn );
   scene.add( pivotUranus );
   scene.add( pivotNeptune );
+
 
 }
 
@@ -922,5 +940,4 @@ function createPlanetNameText() {
     createText("Saturn", 0xC1B95B, 20, -40, 45, 380, scene, pivotSaturn);
     createText("Uranus", 0x408BB7, 20, -40, 45,470, scene, pivotUranus);
     createText("Neptune", 0x408BB7, 20, -50, 45, 520, scene, pivotNeptune);
-    createText("CANADA", 0x0ff0000, 30, -100, 320, 1000, scene, asteroidPivot);
 }
