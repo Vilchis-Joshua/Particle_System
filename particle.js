@@ -63,7 +63,8 @@ function init() {
 
 
 
-
+    var skybox = createParticleSystem(0xFFFFFF, 200000, "particle.png", 0, 0, 0, true, 1, 1, 1500); //sun
+    scene.add(skybox);
     addSunAndPlanets();
     addMoons();
     addContinents();
@@ -91,12 +92,6 @@ function init() {
     };
 
     addParameters(parameters);
-    // if(setTimeout(myFunction, 3000)) {
-    //   console.log(asteroid2.position.x, asteroid2.position.y, asteroid2.position.z)
-    //   //explode();
-    // }
-    //var myVar = setInterval(myTimer, 5200);
-
 
 
 
@@ -107,16 +102,13 @@ function init() {
 
 function animate() {
 
-    render();
-    requestAnimationFrame( animate );
-   //  camera.lookAt( scene.position ); // the origin
+  render();
+  requestAnimationFrame( animate );
 
-   animateParticles(particleSSun1);
-   rotatePlanets();
-   rotateAroundSun();
-   rotateMoons();
-  //  blowUpSun(particleSSun);
-  //  blowUpSun(particleSSun1);
+  animateParticles(particleSSun1);
+  rotatePlanets();
+  rotateAroundSun();
+  rotateMoons();
 
 
 }
@@ -132,10 +124,6 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     render();
 }
-
-// function reset() {
-//   init();
-// }
 
 
 //Canada
@@ -169,87 +157,14 @@ function createAsteroid() {
    var geometry = new THREE.ShapeGeometry( asteroid, 200 );
 
  	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
- 	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
  	var particleCube = new THREE.PointCloud( geometry, discTexture );
  	particleCube.position.set(350, 0, 0);
 
    return particleCube;
 }
 
-// function createAsteroid() {
-//
-//    asteroid = new THREE.Shape();
-//    asteroid.moveTo( 0, 0 );
-//
-//    asteroid.bezierCurveTo( -20, -5, -40, -10, -40, 0);
-//    asteroid.bezierCurveTo( -40, 0, -30 , 3, -20, 10);
-//    asteroid.bezierCurveTo( -20, 10, -30 , 20, -40, 40);
-//    asteroid.bezierCurveTo( -40, 40, -30 , 36, -25, 32);
-//    asteroid.bezierCurveTo( -25, 32, -40 , 55, -45, 60);
-//    asteroid.bezierCurveTo( -45, 60, -30 , 50, -20, 40);
-//    asteroid.bezierCurveTo( -20, 40, -23, 50, -25, 55);
-//    asteroid.bezierCurveTo( -25, 55, -15 , 50, -10, 45);
-//    // asteroid.bezierCurveTo( -20, 10, -30 , 3, -20, 10);
-//
-//
-//    var geometry = new THREE.ShapeGeometry( asteroid, 100 );
-//
-//  	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
-//  	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
-//  	var particleCube = new THREE.PointCloud( geometry, discTexture );
-//  	particleCube.position.set(0, 300, 1000);
-//
-//    scene.add(particleCube);
-//    // return particleCube;
-// }
-
-
-//fish eating the sun asteroid
-// function createAsteroid() {
-//
-//    asteroid = new THREE.Shape();
-//    asteroid.moveTo( 0, 0 );
-//
-//    asteroid.bezierCurveTo( 0, 0, -10, -5, -20, 0 );
-//    asteroid.bezierCurveTo( -20, 0, -30, -1, -40, 0 );
-//    asteroid.bezierCurveTo( -40, 0, -50, -10, -60, 0 );
-//    asteroid.bezierCurveTo( -60, 0, -100, 10, -130, 30 );
-//    asteroid.bezierCurveTo( -130, 30, -140, -10, -145, 40 );
-//    asteroid.bezierCurveTo( -145, 40, -144, 80, -130, 60 );
-//    asteroid.bezierCurveTo( -130, 60, -129, 50, -130, 45 );
-//    asteroid.bezierCurveTo( -130, 45, -100, 47, -90, 57 );
-//    asteroid.bezierCurveTo( -90, 57, -60, 58, -40, 57 );
-//    asteroid.bezierCurveTo( -40, 57, -20, 58, 0, 57 );
-//    asteroid.bezierCurveTo( 0, 57, 15, 40, 14, 28 );
-//    asteroid.bezierCurveTo( 14, 28, -2, 12, 0, 0 );
-//
-//
-//    var geometry = new THREE.ShapeGeometry( asteroid, 100 );
-//
-//  	var discTexture = new THREE.PointCloudMaterial({color: 0xff0000});
-//  	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
-//  	var particleCube = new THREE.PointCloud( geometry, discTexture );
-//  	particleCube.position.set(0, 300, 1000);
-//
-//    scene.add(particleCube);
-//    // return particleCube;
-// }
-
-
 function createTriangle3() {
   var x = 0, y = 0;
-
-  var shape = new THREE.Shape();
-
-  // for(var i = 0; i < 5; i++) {
-  //   shape.moveTo( x, y );
-  //   shape.bezierCurveTo(x - 3.5, y + 2);
-  //   shape.bezierCurveTo(x - 1.5, y - 1.5);
-  //
-  //   shape.bezierCurveTo()
-  //   // shape.bezierCurveTo(x + 5 - i, y - 5 + i);
-  //   // shape.bezierCurveTo(x - 5 + (2 * i), y - 5);
-  // }
 
   var shape = new THREE.Shape();
 
@@ -276,12 +191,10 @@ shape.bezierCurveTo( 9/4, -5/4, 7/4 ,0);
   var geometry = new THREE.ShapeGeometry( shape, 100 );
 
 	var discTexture = new THREE.PointCloudMaterial({color: 0x256818});
-	// var particleMaterial = new THREE.ParticleBasicMaterial({ map: discTexture, size: 10, color: 0xff0000, transparency: true, alphaTest: 0.5});
 	var particleCube = new THREE.PointCloud( geometry, discTexture );
 	particleCube.position.set(0, 0, 7);
 
   return particleCube;
-	//scene.add( particleCube );
 }
 
 
@@ -311,7 +224,6 @@ function addParameters(param) {
     var mercuryCont = f1.add(param, 'showMercury').name('Show Mercury');
     mercuryCont.onChange(function(value) {
       if (value == true) {
-        //camera.lookAt( particleSEarth.position );
         pivotMercury.add(camera);
 
         camera.lookAt(particleSMercury.position);
@@ -330,7 +242,6 @@ function addParameters(param) {
   var venusCont = f1.add(param, 'showVenus').name('Show Venus');
   venusCont.onChange(function(value) {
     if (value == true) {
-      //camera.lookAt( particleSEarth.position );
       pivotVenus.add(camera);
 
       camera.lookAt(particleSVenus.position);
@@ -350,7 +261,6 @@ function addParameters(param) {
     var earthCont = f1.add(param, 'showEarth').name('Show Earth');
     earthCont.onChange(function(value) {
       if (value == true) {
-        //camera.lookAt( particleSEarth.position );
         pivotEarth.add(camera);
 
         camera.lookAt(particleSEarth.position);
@@ -370,7 +280,6 @@ function addParameters(param) {
   var marsCont = f1.add(param, 'showMars').name('Show Mars');
   marsCont.onChange(function(value) {
     if (value == true) {
-      //camera.lookAt( particleSEarth.position );
       pivotMars.add(camera);
 
       camera.lookAt(particleSMars.position);
@@ -390,7 +299,6 @@ function addParameters(param) {
 var jupiterCont = f1.add(param, 'showJupiter').name('Show Jupiter');
 jupiterCont.onChange(function(value) {
   if (value == true) {
-    //camera.lookAt( particleSEarth.position );
     pivotJupiter.add(camera);
 
     camera.lookAt(particleSJupiter.position);
@@ -410,7 +318,6 @@ jupiterCont.onChange(function(value) {
 var saturnCont = f1.add(param, 'showSaturn').name('Show Saturn');
 saturnCont.onChange(function(value) {
   if (value == true) {
-    //camera.lookAt( particleSEarth.position );
     pivotSaturn.add(camera);
 
     camera.lookAt(particleSSaturn.position);
@@ -430,7 +337,6 @@ saturnCont.onChange(function(value) {
 var uranusCont = f1.add(param, 'showUranus').name('Show Uranus');
 uranusCont.onChange(function(value) {
   if (value == true) {
-    //camera.lookAt( particleSEarth.position );
     pivotUranus.add(camera);
 
     camera.lookAt(particleSUranus.position);
@@ -450,7 +356,6 @@ uranusCont.onChange(function(value) {
 var neptuneCont = f1.add(param, 'showNeptune').name('Show Neptune');
 neptuneCont.onChange(function(value) {
   if (value == true) {
-    //camera.lookAt( particleSEarth.position );
     pivotNeptune.add(camera);
 
     camera.lookAt(particleSNeptune.position);
@@ -466,7 +371,6 @@ neptuneCont.onChange(function(value) {
   }
 }
 );
-// gui.add(param, 'explode', 0, 10).name('Explosion');
 var explodeCont = gui.add(param, 'explode').name('Explosion');
 explodeCont.onChange(function(value) {
   if (value == true) {
@@ -508,18 +412,6 @@ explodeCont.onChange(function(value) {
 
   //f1.open();
   gui.open();
-}
-// Create the lights function --------------------------------------------------
-function createLight( color, lx, ly, lz ) {
-      var pointLight = new THREE.PointLight( color, 1, 700 );
-      // var geometry = new THREE.SphereGeometry( 3, 12, 6 );
-      // var material = new THREE.MeshBasicMaterial( { color: color } );
-      //
-      // var sphere = new THREE.Mesh( geometry, material );
-      pointLight.position.set(lx, ly, lz);
-      pointLight.add( pointLight );
-
-      return pointLight;
 }
 
 function myTimer() {
@@ -581,13 +473,6 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
       py = distance * Math.sin(theta) * Math.sin(phi);
       pz = distance * Math.cos(theta);
       var particle = new THREE.Vector3(px, py, pz);
-        // // This will create all the vertices in a range of -200 to 200 in all directions
-        // var x = Math.random() * 400 - 200;
-        // var y = Math.random() * 400 - 200;
-        // var z = Math.random() * 400 - 200;
-        //
-        // // Create the vertex
-        // var particle = new THREE.Vector3(x, y, z);
 
         // Add the vertex to the geometry
         particles.vertices.push(particle);
@@ -611,17 +496,12 @@ function createParticleSystem(color, particleCount, image, startX, startY, start
 
 function createParticleSystemRing(color, particleCount, image, startX, startY, startZ, isTransparent, size, oRadius, iRadius ,j ,k) {
 
-    // The number of particles in a particle system is not easily changed.
-    // var particleCount = 10000;
-
-    // Particles are just individual vertices in a geometry
-    // Create the geometry that will hold all of the vertices
     var particles = new THREE.Geometry();
     var px = 0.0;
     var py = 0.0;
     var pz = 0.0;
 
-    // Create the vertices and add them to the particles geometry
+
     for (var p = 0; p < particleCount; p++) {
 
       var distance = THREE.Math.randFloatSpread(oRadius) - iRadius;
@@ -632,15 +512,7 @@ function createParticleSystemRing(color, particleCount, image, startX, startY, s
       py = distance * Math.sin(theta) * Math.sin(phi);
       pz = distance * Math.cos(theta);
       var particle = new THREE.Vector3(px, py, pz);
-        // // This will create all the vertices in a range of -200 to 200 in all directions
-        // var x = Math.random() * 400 - 200;
-        // var y = Math.random() * 400 - 200;
-        // var z = Math.random() * 400 - 200;
-        //
-        // // Create the vertex
-        // var particle = new THREE.Vector3(x, y, z);
 
-        // Add the vertex to the geometry
         particles.vertices.push(particle);
     }
 
@@ -729,14 +601,8 @@ function addSunAndPlanets() {
 
 function addMoons() {
   earthMoon = createParticleSystem(0x87939B, 10000, "particle.png", 0, 0, 12, true, 2, 1, 1);
-  // neptuneMoon = createParticleSystem(0x87939B, 10000, "particle.png", 25, 0, 0, true, 2, 1, 0.5);
-  // marsMoon1 = createParticleSystem(0x87939B, 10000, "particle.png", 9, 0, 0, true, 2, 1, 0.1);
-  // marsMoon2 = createParticleSystem(0x87939B, 10000, "particle.png", -9, 0, 0, true, 2, 1, 0.1);
 
   scene.add(earthMoon);
-  // scene.add(marsMoon1);
-  // scene.add(marsMoon2);
-  // scene.add(neptuneMoon);
 }
 
 function rotateAroundSun() {
@@ -758,8 +624,6 @@ function rotateAroundSun() {
 function rotateMoons () {
 
     pivotEarthMoon.rotation.y += (parameters.rotatoP * 0.000366);
-    // pivotMarsMoon.rotation.y -= 0.05;
-    // pivotNeptuneMoon.rotation.y -= 0.05;
 }
 
 function rotatePlanets() {
@@ -800,16 +664,9 @@ function addPivots() {
   pivotEarth.add( pivotEarthMoon );
   pivotEarth.add( pivotContinents );
   //Mars
-  // pivotMarsMoon = new THREE.Group();
-  // pivotMarsMoon.position.set(0, 0, 215);
-  // pivotMarsMoon.add( marsMoon1 );
-  // pivotMarsMoon.add( marsMoon2 );
-
   pivotMars = new THREE.Group();
   pivotMars.add( particleSMars );
-  // pivotMars.add( pivotMarsMoon );
   //Jupiter
-
   pivotEye = new THREE.Group();
   pivotEye.position.set(0, -10, 280);
   pivotEye.add ( eyeOfTheTiget );
@@ -828,14 +685,8 @@ function addPivots() {
   pivotUranus = new THREE.Group();
   pivotUranus.add( particleSUranus );
   //Neptune
-
-  // pivotNeptuneMoon = new THREE.Group();
-  // pivotNeptuneMoon.position.set(0, 0, 520);
-  // pivotNeptuneMoon.add( neptuneMoon );
-
   pivotNeptune = new THREE.Group();
   pivotNeptune.add( particleSNeptune );
-  // pivotNeptune.add( pivotNeptuneMoon );
 
   pivotAsteroid = new THREE.Group();
   pivotAsteroid.position.set(0, 0, 350);
