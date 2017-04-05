@@ -63,7 +63,7 @@ function init() {
 
 
 
-    var skybox = createParticleSystem(0xFFFFFF, 200000, "particle.png", 0, 0, 0, true, 1, 1, 1500); //sun
+    var skybox = createParticleSystem(0xFFFFFF, 100000, "particle.png", 0, 0, 0, true, 1, 1, 1500); //sun
     scene.add(skybox);
     addSunAndPlanets();
     addMoons();
@@ -87,6 +87,7 @@ function init() {
       this.showUranus = false;
       this.showNeptune = false;
       this.explode = false;
+      this.notAPlanet = false;
       // this.showText = false;
       //this.reset = function () { reset() };
     };
@@ -377,7 +378,7 @@ explodeCont.onChange(function(value) {
     createText("CANADA", 0x0ff0000, 30, 250, 25, 0, scene, pivotAsteroid);
     addCanada();
     pivotAsteroid.add(asteroid2);
-    myVar = setInterval(myTimer, 4800);
+    myVar = setInterval(myTimer, 4600);
   }
   else {
     clearInterval(myVar);
@@ -403,6 +404,20 @@ explodeCont.onChange(function(value) {
     scene.remove(pivotAsteroid);
     scene.remove(asteroid2);
     createPlanetNameText();
+
+  }
+}
+);
+
+var sun = f1.add(param, 'notAPlanet').name('Not A Planet');
+sun.onChange(function(value) {
+  if (value == true) {
+    scene.remove(particleSSun);
+    scene.remove(particleSSun1);
+  }
+  else {
+    scene.add(particleSSun);
+    scene.add(particleSSun);
 
   }
 }
